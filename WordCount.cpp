@@ -123,31 +123,34 @@ bool WordCount::isWordChar(char c) {
 
  
   // All usable letters
+  int x = 0;
   char a[] = {'a','A','b','B','c','C','d','D','e','E','f','F','g','G','h','H','i','I','j','J','k','K','l','L','m','M','n','N','o','O','p','P','q','Q','r','R','s','S','t','T','u','U','v','V','w','W','x','X','y','Y','z','Z'};
    // Returns true if c is a lowercase or uppercase letter only
   for (int i = 0; i < 52; i++){
-    if (a[i] == c)
-      return true;
+    if (c == a[i])
+      x = 1;
   }
-  return false;
+  return x;
 }
 
 std::string WordCount::makeValidWord(std::string word) {
 
-  string str(word);
-  // Checks through every character in the string
-  for (int i = 0; i < str.length(); i++) {
-    // If the first or last characters are not letters, they are removed
-    char x = str[i];
-    //int strcmp(const char x, -
-    if (!isWordChar(str[0]))
-      str.erase(0,0);
-    if (!isWordChar(str[str.length()-1]))
-      str.erase(str[str.length()-1], str[str.length()-1]);
-    // If a character is not a letter, "-", or "'", it is removed
-    if ((!isWordChar(x))&&(x != 45) && (x != 39))
-	str.erase(i,i);
+  // Checks if the first character in the string is a letter
+  if (!(isWordChar(word[0]))){
+    word.erase(word.begin());
   }
-  return str;
+  // Checks if the last letter of the string is a a letter
+  if (!(isWordChar(word[word.length()-1])))
+    word.pop_back();
+  // Checks every other character in the string
+  for (int i = 0; i < word.length(); i++) {
+    char x = word[i];
+    // If a character is not a letter, "-", or "'", it is removed
+    if ((!(isWordChar(x)))&&(x != '-') && (x != '\'')){
+      word.erase(word.begin()+i);
+      i--;
+    }
+  }
+  return word;
 }
 
