@@ -14,11 +14,14 @@ int main() {
   std::string test3 = "O'Brien";
   std::string test4 = "-A-A-";
   std::string test5 = "Rus'";
+  std::string test6 = "-";
   std::string x = WordCount::makeValidWord(test1);
   std::string y = WordCount::makeValidWord(test2);
   std::string z = WordCount::makeValidWord(test3);
   std::string a = WordCount::makeValidWord(test4);
   std::string b = WordCount::makeValidWord(test5);
+  std::string c = WordCount::makeValidWord(test6);
+  cout << c << endl;
   assertEquals('l', x[3], "Testing Apple3![3] = l", -1);
   assertEquals('A', y[0], "Testing 3456A[0] = A", -1);
   assertTrue((x == "Apple"), "Testing Apple3! == Apple", -1);
@@ -32,10 +35,14 @@ int main() {
   assertTrue(!(WordCount::isWordChar('-')), "- is not a char", -1);
   assertTrue(!(WordCount::isWordChar('1')), "1 is not a char", -1);
   assertTrue(!(WordCount::isWordChar('@')), "@ is not a char", -1);
+  assertTrue((c == ""), "- is null", -1);
 
   // Testing testTable
   assertTrue((testTable.getTotalWords() == 0), "getTotalWords = 0 when empty", -1);
   assertTrue((testTable.getNumUniqueWords() == 0), "getNumUniqueWords = 0 when empty", -1);
+
+  // Tests incrWordCount, decrWordCount, getWordCount, getNumUniqueWords,
+  // getTotalWords
   testTable.incrWordCount("Hello");
   testTable.incrWordCount("Google");
   testTable.incrWordCount("Google");
@@ -55,5 +62,13 @@ int main() {
   assertTrue((testTable.getTotalWords() == 5), "5 words in total after removing 3 words, 2 instances of one word", -1);
   assertTrue((testTable.getWordCount("Google") == 2), "Word Count of Google is 2", -1);
   assertTrue((testTable.getWordCount("Apple") == 0), "Word Count of Apple is 0", -1);
+  assertTrue((testTable.getWordCount("Google") == 2), "Google appears twice", -1);
+  testTable.decrWordCount("Google");
+  assertTrue((testTable.getWordCount("Google") == 1), "Google appears once, 1 removed", -1);
+  assertTrue((testTable.getTotalWords() == 4), "4 words in total", -1);
+  assertTrue((testTable.getWordCount("A") == 0), "A does not appear (stripped version of 3456A", -1);
+  assertTrue((testTable.getWordCount("UCSB") == 0), "UCSB does not appear", -1);
+  assertTrue((testTable.getWordCount("-") == 0), "- does not appear in the list", -1);
+  
   
 }

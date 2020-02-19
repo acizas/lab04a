@@ -74,22 +74,24 @@ int WordCount::incrWordCount(std::string word) {
   int wordCount = 0;
   // Makes the word all-lowercase and removes invalid symbols
   std::string validWord = makeValidWord(word);
-  // Checks to see if the word is in the table
-  int hashKey = hash(validWord);
-  for (int i = 0; i < table[hashKey].size(); i++){
-    if (table[hashKey][i].first == validWord) {
-      wordCount = table[hashKey][i].second + 1;
-      table[hashKey][i].second += 1;
-      return wordCount;
-    }
+  if (!(validWord.empty())){
+    // Checks to see if the word is in the table
+    int hashKey = hash(validWord);
+    for (int i = 0; i < table[hashKey].size(); i++){
+      if (table[hashKey][i].first == validWord) {
+	wordCount = table[hashKey][i].second + 1;
+	table[hashKey][i].second += 1;
+	return wordCount;
+      }
+    }  
+    // Creates an entry in the table for the word
+    std::pair <std::string, int> newWord;
+    newWord.first = validWord;
+    newWord.second = 1;
+    table[hashKey].push_back(newWord);
+    wordCount = 1;  
+    return wordCount;
   }
-  // Creates an entry in the table for the word
-  std::pair <std::string, int> newWord;
-  newWord.first = validWord;
-  newWord.second = 1;
-  table[hashKey].push_back(newWord);
-  wordCount = 1;  
-  return wordCount;
 }
 
 int WordCount::decrWordCount(std::string word) {
@@ -97,33 +99,35 @@ int WordCount::decrWordCount(std::string word) {
   int wordCount = 0;
   // Makes the word all-lowercase and removes invalid symbols
   std::string validWord = makeValidWord(word);
-  int hashKey = hash(validWord);
-  // Checks to see if the word is already in the table
-  for (int i = 0; i < table[hashKey].size(); i++) {
-    if (table[hashKey][i].first == validWord) {
-      int number = table[hashKey][i].second;
-      if (number > 1) {
-	table[hashKey][i].second -= 1;
-	wordCount = table[hashKey][i].second;
-	return wordCount;
-      }
-      else {
-	table[hashKey][i].second -= 1;
-	//table[hashKey][i].erase(table[hashKey][i].begin()+i);
-	wordCount = 0;
-	return wordCount;
+  if (!(validWord.empty())){
+    int hashKey = hash(validWord);
+    // Checks to see if the word is already in the table
+    for (int i = 0; i < table[hashKey].size(); i++) {
+      if (table[hashKey][i].first == validWord) {
+	int number = table[hashKey][i].second;
+	if (number > 1) {
+	  table[hashKey][i].second -= 1;
+	  wordCount = table[hashKey][i].second;
+	  return wordCount;
+	}
+	else {
+	  table[hashKey][i].second = 0;
+	  //table[hashKey][i].erase(table[hashKey][i].begin()+i);
+	  wordCount = 0;
+	  table[hashKey].erase(table[hashKey].begin()+i);
+	  return wordCount;
+	}
       }
     }
-  }
   wordCount = -1;
   return wordCount;
+  }
 }
 
 bool WordCount::isWordChar(char c) {
 
- 
-  // All usable letters
   int x = 0;
+  // Only lowercase and capital letters are always valid
   char a[] = {'a','A','b','B','c','C','d','D','e','E','f','F','g','G','h','H','i','I','j','J','k','K','l','L','m','M','n','N','o','O','p','P','q','Q','r','R','s','S','t','T','u','U','v','V','w','W','x','X','y','Y','z','Z'};
    // Returns true if c is a lowercase or uppercase letter only
   for (int i = 0; i < 52; i++){
@@ -135,6 +139,16 @@ bool WordCount::isWordChar(char c) {
 
 std::string WordCount::makeValidWord(std::string word) {
 
+  // Checks if the string is empty
+  if (word.length() == 0)
+    return "";
+  // Checks if the string is a one-character invalid string
+  if (word.length() == 1) {
+    if (!(isWordChar(word[0])))
+      return "";
+    else
+      return word;
+  }
   // Checks if the first character in the string is a letter
   if (!(isWordChar(word[0]))){
     word.erase(word.begin());
