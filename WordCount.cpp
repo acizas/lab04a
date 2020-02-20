@@ -72,6 +72,8 @@ int WordCount::getWordCount(std::string word) const {
 int WordCount::incrWordCount(std::string word) {
 
   int wordCount = 0;
+  if (word == "")
+    return 0;
   // Makes the word all-lowercase and removes invalid symbols
   std::string validWord = makeValidWord(word);
   if (!(validWord.empty())){
