@@ -110,6 +110,11 @@ int main() {
   cout << vw9 << endl;
   std::string vw10 = WordCount::makeValidWord(word10);
   cout << vw10 << endl;
+
+  cout << table.incrWordCount("--$$--") << endl;
+  cout << WordCount::makeValidWord("--$$--") << endl;
+  assertTrue( (table.incrWordCount("--$$--") == 0), "--$$-- appears 0 times", -1);
+ 
   
   
 }
