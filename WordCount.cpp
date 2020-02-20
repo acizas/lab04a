@@ -156,11 +156,15 @@ std::string WordCount::makeValidWord(std::string word) {
   while(!(isWordChar(word[0]))){
     if (!(word == ""))
       word.erase(word.begin());
+    else
+      return "";
   }
   // Checks if the last letter of the string is a a letter
   while(!(isWordChar(word[word.length()-1]))){
     if (!(word == ""))
 	word.pop_back();
+    else
+      return "";
   }
   // Checks every other character in the string
   for (size_t i = 0; i < word.length(); i++) {
