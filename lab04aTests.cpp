@@ -72,6 +72,8 @@ int main() {
   assertTrue((testTable.getWordCount("UCSB") == 0), "UCSB does not appear", -1);
   assertTrue((testTable.getWordCount("-") == 0), "- does not appear in the list", -1);
 
+  // Official Test Cases
+  cout << "#########################################################################" << endl;
   cout << "Tests Part 2" << endl;
 
   WordCount table;
@@ -89,30 +91,17 @@ int main() {
   std::string word11 = "-";
 
   std::string vw1 = WordCount::makeValidWord(word1);
-  cout << vw1 << endl;
   std::string vw2 = WordCount::makeValidWord(word2);
-  cout << vw2 << endl;
   std::string vw3 = WordCount::makeValidWord(word3);
-  cout << vw3 << endl;
   std::string vw4 = WordCount::makeValidWord(word4);
-  cout << vw4 << endl;
   std::string vw5 = WordCount::makeValidWord(word5);
-  cout << vw5 << endl;
   std::string vw6 = WordCount::makeValidWord(word6);
-  cout << vw6 << endl;
   std::string vw7 = WordCount::makeValidWord(word7);
-  cout << vw7 << endl;
   std::string vw8 = WordCount::makeValidWord(word8);
-  cout << vw8 << endl;
-  std::string vw11 = WordCount::makeValidWord(word11);
-  cout << vw11 << endl;
   std::string vw9 = WordCount::makeValidWord(word9);
-  cout << vw9 << endl;
   std::string vw10 = WordCount::makeValidWord(word10);
-  cout << vw10 << endl;
+  std::string vw11 = WordCount::makeValidWord(word11);
 
-  cout << table.incrWordCount("--$$--") << endl;
-  cout << WordCount::makeValidWord("--$$--") << endl;
   assertTrue( (table.incrWordCount("--$$--") == 0), "--$$-- appears 0 times", -1);
  
   
