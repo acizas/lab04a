@@ -158,7 +158,7 @@ std::string WordCount::makeValidWord(std::string word) {
   while(!(isWordChar(word[word.length()-1])))
     word.pop_back();
   // Checks every other character in the string
-  for (int i = 0; i < word.length(); i++) {
+  for (size_t i = 0; i < word.length(); i++) {
     char x = word[i];
     // If a character is not a letter, "-", or "'", it is removed
     if ((!(isWordChar(x)))&&(x != '-') && (x != '\'')){
@@ -166,7 +166,7 @@ std::string WordCount::makeValidWord(std::string word) {
       i--;
     }
   }
-  for (int i = 0; i < word.length(); i++){
+  for (size_t i = 0; i < word.length(); i++){
     if (isWordChar(word[i]))
       word[i] = tolower(word[i]);
   }
