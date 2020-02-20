@@ -36,7 +36,7 @@ int main() {
   assertTrue(!(WordCount::isWordChar('-')), "- is not a char", -1);
   assertTrue(!(WordCount::isWordChar('1')), "1 is not a char", -1);
   assertTrue(!(WordCount::isWordChar('@')), "@ is not a char", -1);
-  assertTrue((c == ""), "- is null", -1);
+  assertTrue((c == "-"), "- is valid", -1);
   assertTrue((d == "s"), " $-s'-# == s", -1);
 
   // Testing testTable
@@ -71,6 +71,45 @@ int main() {
   assertTrue((testTable.getWordCount("A") == 0), "A does not appear (stripped version of 3456A", -1);
   assertTrue((testTable.getWordCount("UCSB") == 0), "UCSB does not appear", -1);
   assertTrue((testTable.getWordCount("-") == 0), "- does not appear in the list", -1);
+
+  cout << "Tests Part 2" << endl;
+
+  WordCount table;
+
+  std::string word1 = ".foo";
+  std::string word2 = "bar?";
+  std::string word3 = "...fum***";
+  std::string word4 = "\"quote\"";
+  std::string word5 = "isn't";
+  std::string word6 = "mother-in-law";
+  std::string word7 = "'aRT-*";
+  std::string word8 = "$-s'-#";
+  std::string word9 = "$$*-'-!";
+  std::string word10 = "";
+  std::string word11 = "-";
+
+  std::string vw1 = WordCount::makeValidWord(word1);
+  cout << vw1 << endl;
+  std::string vw2 = WordCount::makeValidWord(word2);
+  cout << vw2 << endl;
+  std::string vw3 = WordCount::makeValidWord(word3);
+  cout << vw3 << endl;
+  std::string vw4 = WordCount::makeValidWord(word4);
+  cout << vw4 << endl;
+  std::string vw5 = WordCount::makeValidWord(word5);
+  cout << vw5 << endl;
+  std::string vw6 = WordCount::makeValidWord(word6);
+  cout << vw6 << endl;
+  std::string vw7 = WordCount::makeValidWord(word7);
+  cout << vw7 << endl;
+  std::string vw8 = WordCount::makeValidWord(word8);
+  cout << vw8 << endl;
+  std::string vw11 = WordCount::makeValidWord(word11);
+  cout << vw11 << endl;
+  std::string vw9 = WordCount::makeValidWord(word9);
+  cout << vw9 << endl;
+  std::string vw10 = WordCount::makeValidWord(word10);
+  cout << vw10 << endl;
   
   
 }

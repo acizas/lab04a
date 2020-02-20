@@ -127,7 +127,6 @@ int WordCount::decrWordCount(std::string word) {
 bool WordCount::isWordChar(char c) {
 
   int x = 0;
-  // Only lowercase and capital letters are always valid
   char a[] = {'a','A','b','B','c','C','d','D','e','E','f','F','g','G','h','H','i','I','j','J','k','K','l','L','m','M','n','N','o','O','p','P','q','Q','r','R','s','S','t','T','u','U','v','V','w','W','x','X','y','Y','z','Z'};
    // Returns true if c is a lowercase or uppercase letter only
   for (int i = 0; i < 52; i++){
@@ -140,23 +139,29 @@ bool WordCount::isWordChar(char c) {
 std::string WordCount::makeValidWord(std::string word) {
 
   // Checks if the string is empty
-  if (word.length() == 0)
-    return "";
+  if (word == "")
+    return std::string();
+  // Checks if the string is -
+  if (word == "-")
+    return "-";
   // Checks if the string is a one-character invalid string
   if (word.length() == 1) {
     if (!(isWordChar(word[0])))
-      return "";
+      return std::string();
     else
       return word;
   }
   
   // Checks if the first character in the string is a letter
   while(!(isWordChar(word[0]))){
-    word.erase(word.begin());
+    if (!(word == ""))
+      word.erase(word.begin());
   }
   // Checks if the last letter of the string is a a letter
-  while(!(isWordChar(word[word.length()-1])))
-    word.pop_back();
+  while(!(isWordChar(word[word.length()-1]))){
+    if (!(word == ""))
+	word.pop_back();
+  }
   // Checks every other character in the string
   for (size_t i = 0; i < word.length(); i++) {
     char x = word[i];
@@ -170,7 +175,10 @@ std::string WordCount::makeValidWord(std::string word) {
     if (isWordChar(word[i]))
       word[i] = tolower(word[i]);
   }
-  	      
+  if (word == "")
+    return std::string();
+  if (word == "-")
+    return "-";
   return word;
 
 }
