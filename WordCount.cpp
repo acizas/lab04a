@@ -27,7 +27,7 @@ int WordCount::getTotalWords() const {
   for (int i = 0; i < 100; i++) {
     // Checks to see if the spot in the table is occupied
     if (!(table[i].empty())){
-      for (int j = 0; j < table[i].size(); j++) {
+      for (size_t j = 0; j < table[i].size(); j++) {
 	if ((table[i][j]).second != 0)
 	totalWords += table[i][j].second;
       }
@@ -41,7 +41,7 @@ int WordCount::getNumUniqueWords() const {
   int numUniqueWords = 0;
   for (int i = 0; i < 100; i++) {
     if (!(table[i].empty())){
-      for (int j = 0; j < table[i].size(); j++) {
+      for (size_t j = 0; j < table[i].size(); j++) {
 	numUniqueWords += 1;
       }
     }
@@ -62,7 +62,7 @@ int WordCount::getWordCount(std::string word) const {
   }
   else {
     // Counts through the elements in the vector at the word's hash table index
-    for (int i = 0; i < table[hashKey].size(); i++) {
+    for (size_t i = 0; i < table[hashKey].size(); i++) {
       if (table[hashKey][i].first == validWord)
 	  wordCount = table[hashKey][i].second;
     }
@@ -77,7 +77,7 @@ int WordCount::incrWordCount(std::string word) {
   if (!(validWord.empty())){
     // Checks to see if the word is in the table
     int hashKey = hash(validWord);
-    for (int i = 0; i < table[hashKey].size(); i++){
+    for (size_t i = 0; i < table[hashKey].size(); i++){
       if (table[hashKey][i].first == validWord) {
 	wordCount = table[hashKey][i].second + 1;
 	table[hashKey][i].second += 1;
@@ -102,7 +102,7 @@ int WordCount::decrWordCount(std::string word) {
   if (!(validWord.empty())){
     int hashKey = hash(validWord);
     // Checks to see if the word is already in the table
-    for (int i = 0; i < table[hashKey].size(); i++) {
+    for (size_t i = 0; i < table[hashKey].size(); i++) {
       if (table[hashKey][i].first == validWord) {
 	int number = table[hashKey][i].second;
 	if (number > 1) {
@@ -149,12 +149,13 @@ std::string WordCount::makeValidWord(std::string word) {
     else
       return word;
   }
+  
   // Checks if the first character in the string is a letter
-  if (!(isWordChar(word[0]))){
+  while(!(isWordChar(word[0]))){
     word.erase(word.begin());
   }
   // Checks if the last letter of the string is a a letter
-  if (!(isWordChar(word[word.length()-1])))
+  while(!(isWordChar(word[word.length()-1])))
     word.pop_back();
   // Checks every other character in the string
   for (int i = 0; i < word.length(); i++) {
@@ -165,6 +166,12 @@ std::string WordCount::makeValidWord(std::string word) {
       i--;
     }
   }
+  for (int i = 0; i < word.length(); i++){
+    if (isWordChar(word[i]))
+      word[i] = tolower(word[i]);
+  }
+  	      
   return word;
+
 }
 

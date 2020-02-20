@@ -15,27 +15,29 @@ int main() {
   std::string test4 = "-A-A-";
   std::string test5 = "Rus'";
   std::string test6 = "-";
+  std::string test7 = "$-s'-#";
   std::string x = WordCount::makeValidWord(test1);
   std::string y = WordCount::makeValidWord(test2);
   std::string z = WordCount::makeValidWord(test3);
   std::string a = WordCount::makeValidWord(test4);
   std::string b = WordCount::makeValidWord(test5);
   std::string c = WordCount::makeValidWord(test6);
-  cout << c << endl;
+  std::string d = WordCount::makeValidWord(test7);
   assertEquals('l', x[3], "Testing Apple3![3] = l", -1);
-  assertEquals('A', y[0], "Testing 3456A[0] = A", -1);
-  assertTrue((x == "Apple"), "Testing Apple3! == Apple", -1);
-  assertTrue((y == "A"), "Testing 3456A == A", -1);
+  assertEquals('a', y[0], "Testing 3456A[0] = a", -1);
+  assertTrue((x == "apple"), "Testing Apple3! == apple", -1);
+  assertTrue((y == "a"), "Testing 3456A == A", -1);
   assertTrue((y.length() == 1), "Length of 3456A is 1", -1);
-  assertTrue((z == "O'Brien"), "O'Brien is correct", -1);
-  assertTrue((a == "A-A"), "-A-A- == A-A", -1);
-  assertTrue((b == "Rus"), "Rus' == Rus", -1);
+  assertTrue((z == "o'brien"), "O'Brien is correct", -1);
+  assertTrue((a == "a-a"), "-A-A- == a-a", -1);
+  assertTrue((b == "rus"), "Rus' == rus", -1);
   assertTrue(WordCount::isWordChar('z'), "z is a char", -1);
   assertTrue(WordCount::isWordChar('C'), "C is a char", -1);
   assertTrue(!(WordCount::isWordChar('-')), "- is not a char", -1);
   assertTrue(!(WordCount::isWordChar('1')), "1 is not a char", -1);
   assertTrue(!(WordCount::isWordChar('@')), "@ is not a char", -1);
   assertTrue((c == ""), "- is null", -1);
+  assertTrue((d == "s"), " $-s'-# == s", -1);
 
   // Testing testTable
   assertTrue((testTable.getTotalWords() == 0), "getTotalWords = 0 when empty", -1);
