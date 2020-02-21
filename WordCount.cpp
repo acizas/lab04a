@@ -5,6 +5,7 @@
 #include <utility>
 #include <iostream>
 #include <string>
+#include <array>
 
 using namespace std;
 
@@ -72,22 +73,24 @@ int WordCount::getWordCount(std::string word) const {
 int WordCount::incrWordCount(std::string word) {
 
   int wordCount = 0;
-  
-  // Makes the word all-lowercase and removes invalid symbols
+  // Makes the word valid
   std::string validWord = makeValidWord(word);
+  // Returns 0 if inputting empty string
   if (validWord == "")
     return 0;
-  if (!(validWord.empty())){
-    // Checks to see if the word is in the table
+  //if (!(validWord.empty())){
+  else {
     int hashKey = hash(validWord);
+    // Checks to see if the word is in the table
     for (size_t i = 0; i < table[hashKey].size(); i++){
       if (table[hashKey][i].first == validWord) {
+	// Increments and returns word count
 	wordCount = table[hashKey][i].second + 1;
 	table[hashKey][i].second += 1;
 	return wordCount;
       }
     }  
-    // Creates an entry in the table for the word
+    // If no word is found, creates an entry in the table for the word
     std::pair <std::string, int> newWord;
     newWord.first = validWord;
     newWord.second = 1;
@@ -100,28 +103,34 @@ int WordCount::incrWordCount(std::string word) {
 int WordCount::decrWordCount(std::string word) {
 
   int wordCount = 0;
-  // Makes the word all-lowercase and removes invalid symbols
+  // Makes the word valid
   std::string validWord = makeValidWord(word);
-  if (!(validWord.empty())){
+  if (validWord == "")
+    return 0;
+  else {
+  //if (!(validWord.empty())){
     int hashKey = hash(validWord);
     // Checks to see if the word is already in the table
     for (size_t i = 0; i < table[hashKey].size(); i++) {
       if (table[hashKey][i].first == validWord) {
 	int number = table[hashKey][i].second;
+	// If there is more than one word occurrence, decrements and returns
+	// word count
 	if (number > 1) {
 	  table[hashKey][i].second -= 1;
 	  wordCount = table[hashKey][i].second;
 	  return wordCount;
 	}
+	// If there is only one occurrence, deletes from table and returns 0
 	else {
 	  table[hashKey][i].second = 0;
-	  //table[hashKey][i].erase(table[hashKey][i].begin()+i);
 	  wordCount = 0;
 	  table[hashKey].erase(table[hashKey].begin()+i);
 	  return wordCount;
 	}
       }
     }
+  // If the word is not found, returns -1
   wordCount = -1;
   return wordCount;
   }
@@ -189,4 +198,102 @@ std::string WordCount::makeValidWord(std::string word) {
   return word;
 
 }
+
+void WordCount::dumpWordsSortedByWord(std::ostream &out) const {
+
+ // Initializes a vector that stores every word pair in the table
+  vector<std::pair<std::string, int>> temp;
+  // Reads through every element in the hash table
+  for (int i = 0; i < 100; i++) {
+    for (size_t j = 0; j < table[i].size(); j++) {
+      // Adds every word to the array
+      temp.push_back(table[i][j]);
+    }
+  }
+
+  // Outputs every word in descending ASCII order
+  for (int x = 0; x < temp.size(); x++) {
+    // Variable representing the index of the word with the highest value
+    int max = 0;
+    if (temp.size() == 1)
+      max = 0;
+    if (temp.size() == 0)
+      return;
+    // Find the word with the highest ASCII value
+    for (int y = 0; y < temp.size(); y++) {
+      // If a word has a higher ASCII value, it becomes highest
+      if ((temp[y].first).compare(temp[max].first) > 0)
+	max = y;
+    }
+    
+    // Writes word and occurrences to ostream
+    out << temp[max].first << "," << temp[max].second << "\n";
+    // Deletes the word from array temp
+    temp.erase(temp.begin()+max);
+  }    
+}
+
+void WordCount::dumpWordsSortedByOccurence(std::ostream &out) const {
+
+  // Initializes a vector that stores every word pair in the table
+  vector<std::pair<std::string, int>> temp;
+  // Reads through every element in the hash table
+  for (int i = 0; i < 100; i++) {
+    for (size_t j = 0; j < table[i].size(); j++) {
+      // Adds every word to the array
+      temp.push_back(table[i][j]);
+    }
+  }
+
+  // Outputs every word in ascending order of occurrences
+  for (int x = 0; x < temp.size(); x++) {
+    // Variable representing the index of the word of least occurrences
+    int min = 0;
+    if (temp.size() == 1)
+      min = 0;
+    if (temp.size() == 0)
+      return;
+    // Finds the word with least occurrences
+    for (int y = 0; y < temp.size(); y++) {
+      // If a word has a lower occurrence, it becomes the lowest
+      if (temp[y].second < temp[min].second)
+	min = y;
+      // If a word has the same occurrences, their ASCII values compare
+      else if (temp[y].second == temp[min].second) {
+	// If a word has a lower ASCII value, it becomes lowest
+	if ((temp[y].first).compare(temp[min].first) < 0)
+	  min = y;
+      }
+    }
+    // Writes word and occurrences to ostream
+    out << temp[min].first << "," << temp[min].second << "\n";
+    // Deletes the word from array temp
+    temp.erase(temp.begin()+min);
+  }
+}
+
+void WordCount::addAllWords(std::string text) {
+
+  // Reads through entire text string letter by letter
+  for (int i = 0; i < text.length(); i++) {
+    std::string word;
+    // If the first character or few characters are white space, delete them
+    while((text[0] == ' ') || (text[0] == '\n') || (text[0] == '\t')){
+      text.erase(text.begin());
+    }
+    // Finds the end of a word and makes a substring containing that word
+    if ((text[i+1] == ' ') || (text[i+1] == '\n') || (text[i+1] == '\t')) {
+      if (i == 0)
+	word = text[i];
+      else
+	word = text.substr(0,i);
+      // Adds the word and deletes it from the string
+      incrWordCount(word);
+      text.erase(0,i);
+      // Resets to the new start of the string
+      i = 0;
+    }
+  }         
+}
+
 

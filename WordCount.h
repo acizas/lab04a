@@ -67,6 +67,33 @@ public:
   // "12mOnkEYs-$" will be converted to "monkeys".
   // "Pa55ive" will be stripped "paive".
 
+  ////// NEW FUNCTIONS FOR LAB05a //////
+  void dumpWordsSortedByWord(std::ostream &out) const;
+  // dump each word,count pair as CSV to std::ostream, sorted by word in
+  // descending lexicographical order based on ASCII values. Each word,count
+  // pair will be in its own line with as: word,numOccurence\n
+  // For example: "Sentence is a sentence" will be:
+  // sentence,2
+  // is,1
+  // a,1
+
+  void dumpWordsSortedByOccurence(std::ostream &out) const;
+  // dump each word,count pair as CSV to std::ostream, sorted by occurence in
+  // ascending order. In the event of a tie, ordering is defined by the
+  // ascending lexicographical order of the word key based on ASCII value.
+  // Each word count pair will be in its own line with as word,numOccurence\n
+  // For example, "Sentence is a fun fun sentence" will be:
+  // a,1
+  // is,1
+  // fun,2
+  // sentence,2
+
+  void addAllWords(std::string text);
+  // parse out string text into individual words, and add each word
+  // to the hash table. You may assume that words are always
+  // separated by whitespace characters (' ','\n','\t') within the
+  // string text.
+
 private:
   const static size_t CAPACITY = 100;
   // capacity for the hash table array
