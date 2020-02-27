@@ -297,8 +297,8 @@ void WordCount::addAllWords(std::string text) {
     }
     // Finds the end of a word and makes a substring containing that word
     if ((text[i] == ' ') || (text[i] == '\n') || (text[i] == '\t')) { 
-      if (i == 0)
-	word = text[i];
+      if (text == "")
+	return;
       else
 	word = text.substr(0,i);
       // Adds the word and deletes it from the string
