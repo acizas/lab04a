@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 #include <array>
+#include <algorithm>
+#include <string>
 
 using namespace std;
 
@@ -157,6 +159,12 @@ std::string WordCount::makeValidWord(std::string word) {
   // Checks if the string is -
   if (word == "-")
     return "-";
+  for (size_t k = 0; k < word.length(); k++){
+    if ((word[k] == '\n') || (word[k] == '\t'))
+      word.erase(word.begin()+k);
+  }
+  word.erase(std::remove(word.begin(), word.end(), '\n'), word.end());
+  word.erase(std::remove(word.begin(), word.end(), '\t'), word.end());
   // Checks if the string is a one-character invalid string
   if (word.length() == 1) {
     if (!(isWordChar(word[0])))
@@ -295,8 +303,6 @@ void WordCount::addAllWords(std::string text) {
     while((text[0] == ' ') || (text[0] == '\n') || (text[0] == '\t')){
       text.erase(text.begin());
     }
-    if ((text == "") || (text[0] == '\n') || (text[0] == '\t'))
-      return;
     // Finds the end of a word and makes a substring containing that word
     if ((text[i] == ' ') || (text[i] == '\n') || (text[i] == '\t')) { 
       if (i == 0)
@@ -309,7 +315,7 @@ void WordCount::addAllWords(std::string text) {
       // Resets to the new start of the string
       i = 0;
     }
-    if (text[i] == text[text.length()-1]) {
+    if (text[i] == text[text.length()-1] && (text[i] != '\n') && (text[i] != '\t') && (text[i] != ' ')) {
       word = makeValidWord(text);
 	incrWordCount(word);
       }

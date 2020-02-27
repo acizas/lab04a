@@ -135,6 +135,10 @@ int main() {
   table.incrWordCount(vw2);
   table.incrWordCount(vw3);
 
+  std::string example = " \n\n\n";
+  cout << "Example: " << WordCount::makeValidWord(example) << endl;
+  table.incrWordCount(example);
+
   table.addAllWords("Hello my name is Andrew");
 
   table.WordCount::dumpWordsSortedByWord(cout);
