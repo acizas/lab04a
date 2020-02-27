@@ -79,6 +79,7 @@ int main() {
   
   cout << "Tests Part 2" << endl;
   */
+  /*
   WordCount table;
 
   std::string word1 = ".foo";
@@ -92,6 +93,7 @@ int main() {
   std::string word9 = "$$*-'-!";
   std::string word10 = "";
   std::string word11 = "-";
+  
 
   std::string vw1 = WordCount::makeValidWord(word1);
   cout << vw1 << endl;
@@ -137,9 +139,10 @@ int main() {
 
   std::string example = " \n\n\n";
   cout << "Example: " << WordCount::makeValidWord(example) << endl;
-  table.incrWordCount(example);
+  cout << WordCount::makeValidWord(example) << endl;
+  table.incrWordCount(WordCount::makeValidWord(example));
 
-  table.addAllWords("Hello my name is Andrew");
+  table.addAllWords("Hello my name is\nAndrew");
 
   table.WordCount::dumpWordsSortedByWord(cout);
 
@@ -147,5 +150,9 @@ int main() {
 
   table.WordCount::dumpWordsSortedByOccurence(cout);
 
-  
+  */
+  WordCount Hello;
+  Hello.addAllWords("an example sentence with some spaces and some newlines");
+  Hello.WordCount::dumpWordsSortedByWord(cout);
 }
+

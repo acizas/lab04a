@@ -315,7 +315,7 @@ void WordCount::addAllWords(std::string text) {
       // Resets to the new start of the string
       i = 0;
     }
-    if (text[i] == text[text.length()-1] && (text[i] != '\n') && (text[i] != '\t') && (text[i] != ' ')) {
+    if ((i == text.length()-1) && (text[i] != '\n') && (text[i] != '\t') && (text[i] != ' ')) {
       word = makeValidWord(text);
 	incrWordCount(word);
       }
