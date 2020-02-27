@@ -236,9 +236,10 @@ void WordCount::dumpWordsSortedByWord(std::ostream &out) const {
     temp.erase(temp.begin()+max);
     x = 0;
   }
-  for (size_t j = 0; j < temp.size(); j++)
-    if (temp[j].first == "-")
-      out << temp[j].first << "," << temp[j].second << "\n";
+  //for (size_t j = 0; j < temp.size(); j++)
+  //  if (temp[j].first == "-")
+  //    out << temp[j].first << "," << temp[j].second << "\n";
+   out << temp[0].first << "," << temp[0].second << "\n";
 }
 
 void WordCount::dumpWordsSortedByOccurence(std::ostream &out) const {
@@ -280,6 +281,7 @@ void WordCount::dumpWordsSortedByOccurence(std::ostream &out) const {
     temp.erase(temp.begin()+min);
     x = 0;
   }
+  out << temp[0].first << "," << temp[0].second << "\n";
 }
 
 void WordCount::addAllWords(std::string text) {
