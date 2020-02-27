@@ -161,8 +161,10 @@ std::string WordCount::makeValidWord(std::string word) {
   if (word.length() == 1) {
     if (!(isWordChar(word[0])))
       return std::string();
-    else
+    else {
+      word[0] = tolower(word[0]);
       return word;
+    }
   }
   
   // Checks if the first character in the string is a letter
@@ -306,8 +308,8 @@ void WordCount::addAllWords(std::string text) {
       i = 0;
     }
     if (text[i] == text[text.length()-1]) {
-	word = text;
-	incrWordCount(makeValidWord(word));
+      word = makeValidWord(text);
+	incrWordCount(word);
       }
   }         
 }
