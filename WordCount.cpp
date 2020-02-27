@@ -295,10 +295,12 @@ void WordCount::addAllWords(std::string text) {
     while((text[0] == ' ') || (text[0] == '\n') || (text[0] == '\t')){
       text.erase(text.begin());
     }
+    if ((text == "") || (text[0] == '\n') || (text[0] == '\t'))
+      return;
     // Finds the end of a word and makes a substring containing that word
     if ((text[i] == ' ') || (text[i] == '\n') || (text[i] == '\t')) { 
-      if (text == "")
-	return;
+      if (i == 0)
+	word = text[i];
       else
 	word = text.substr(0,i);
       // Adds the word and deletes it from the string
